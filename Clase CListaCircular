@@ -1,0 +1,270 @@
+package Clases;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Fabrissio
+ */
+public class CListaCircular {
+
+    private CNodo cabeza;
+    private CNodo cola;
+    private int tope;
+
+    static Scanner entrada = new Scanner(System.in);
+
+    public CListaCircular() {
+        cabeza = null;
+        cola = null;
+        tope = 0;
+    }
+
+    public boolean estaVacio() {
+        return cabeza == null;
+    }
+
+    public void insertarInicio(int valor) {
+        CNodo nuevo = new CNodo();
+        nuevo.setDato(valor);
+        if (estaVacio()) {
+            cabeza = nuevo;
+            cola = nuevo;
+        } else {
+            nuevo.setSiguiente(cabeza);
+            cabeza = nuevo;
+        }
+        cola.setSiguiente(cabeza);
+        tope++;
+    }
+
+    public void insertarFinal(int valor) {
+        CNodo nuevo = new CNodo();
+        nuevo.setDato(valor);
+        if (!estaVacio()) {
+            CNodo aux = cabeza;
+            while (aux.getSiguiente() != cabeza) {
+                aux = aux.getSiguiente();
+            }
+            aux.setSiguiente(nuevo);
+            cola = nuevo;
+        } else {
+            System.out.print("La lista esta vacia...");
+        }
+        cola.setSiguiente(cabeza);
+        tope++;
+    }
+
+    public void mostrarDatos() {
+        if (!estaVacio()) {
+            CNodo aux = cabeza;
+            do {
+                System.out.print(" [" + aux.getDato() + "] " + " --> ");
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+    }
+
+    public void mostrarPares() {
+        if (!estaVacio()) {
+            CNodo aux = cabeza;
+            int cont = 0;
+            do {
+                if (aux.getDato() % 2 == 0) {
+                    System.out.print(" [" + aux.getDato() + "] " + " --> ");
+                    cont++;
+                }
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+            System.out.println("\nLa cantidad de pares: " + cont);
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+    }
+
+    public void mostrarImpares() {
+        if (!estaVacio()) {
+            CNodo aux = cabeza;
+            int cont = 0;
+            do {
+                if (aux.getDato() % 2 != 0) {
+                    System.out.print(" [" + aux.getDato() + "] " + " --> ");
+                    cont++;
+                }
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+            System.out.println("\nLa cantidad de impares: " + cont);
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+    }
+
+    public void buscarDatos(int valor) {
+        if (!estaVacio()) {
+            CNodo aux = cabeza;
+            do {
+                if (aux.getDato() == valor) {
+                    System.out.print(" [" + aux.getDato() + "] " + " --> ");
+                }
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+    }
+
+    public void modificarDatos(int valor) {
+        if (!estaVacio()) {
+            CNodo aux = cabeza;
+            do {
+                if (aux.getDato() == valor) {
+                    int nValor;
+                    System.out.print("Ingrese un nuevo numero: ");
+                    nValor = entrada.nextInt();
+                    aux.setDato(nValor);
+                }
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+    }
+
+    public void ordenarLista() {
+        CNodo aux1, aux2;
+        int temp;
+        aux1 = cabeza;
+        while (aux1.getSiguiente() != cabeza) {
+            aux2 = aux1.getSiguiente();
+            while (aux2 != cabeza) {
+                if (aux2.getDato() < aux1.getDato()) {
+                    temp = aux1.getDato();
+                    aux1.setDato(aux2.getDato());
+                    aux2.setDato(temp);
+                }
+                aux2 = aux2.getSiguiente();
+            }
+            aux1 = aux1.getSiguiente();
+        }
+    }
+
+    public void eliminarInicio() {
+        if (estaVacio()) {
+            System.out.println("La lista esta vacio...");
+        } else {
+            cabeza = cabeza.getSiguiente();
+            System.out.println("Se elimino dato inicial...");
+        }
+        cola.setSiguiente(cabeza);
+        tope--;
+    }
+
+    public void eliminarFinal() {
+        if (estaVacio()) {
+            System.out.println("La lista esta vacio...");
+        } else {
+            CNodo aux = cabeza;
+            for (int i = 0; i < tope - 1; i++) {
+                aux = aux.getSiguiente();
+            }
+            if (aux.getSiguiente() == cola) {
+                aux.setSiguiente(cabeza);
+                cola = aux;
+            }
+            System.out.println("Se elimino dato final...");
+        }
+        tope--;
+    }
+
+    public void eliminarPosicion(int pos) {
+        if (pos >= 1 && pos <= tope) {
+            if (pos == 0) {
+                cabeza = cabeza.getSiguiente();
+                cola.setSiguiente(cabeza);
+                System.out.println("Se elimino dato inicial...");
+            } else {
+                CNodo aux = cabeza;
+                for (int i = 0; i < pos - 1; i++) {
+                    aux = aux.getSiguiente();
+                }
+                if (aux.getSiguiente() == cola) {
+                    aux.setSiguiente(cabeza);
+                    cola = aux;
+                    System.out.println("Se elimino dato final...");
+                } else {
+                    CNodo siguiente = aux.getSiguiente();
+                    aux.setSiguiente(siguiente.getSiguiente());
+                }
+            }
+        }
+        tope--;
+    }
+
+    public void intercambiarMayorUltimo() {
+        CNodo aux1;
+        int nMayor = 10;
+        int vCola = cola.getDato();
+        aux1 = cabeza;
+        while (aux1.getSiguiente() != cabeza) {
+            if (aux1.getDato() > nMayor) {
+                nMayor = aux1.getDato();
+            }
+            if (aux1.getDato() == nMayor) {
+                aux1.setDato(vCola);
+            }
+            
+            aux1 = aux1.getSiguiente();
+        }
+        cola.setDato(nMayor);
+        System.out.println("El dato mayor es: " + nMayor);
+        System.out.println("Intercambio realizado...");
+    }
+
+    public void intercambiarMenorPrimero() {
+        CNodo aux1;
+        int nMenor = 30;
+        aux1 = cabeza;
+        while (aux1.getSiguiente() != cabeza) {
+            if (aux1.getDato() < nMenor) {
+                nMenor = aux1.getDato();
+            }
+            if (aux1.getDato() == nMenor) {
+                aux1.setDato(cabeza.getDato());
+            }
+
+            aux1 = aux1.getSiguiente();
+        }
+        cabeza.setDato(nMenor);
+        System.out.println("El dato menor es: " + nMenor);
+        System.out.println("Intercambio realizado...");
+    }
+
+    public void intercambiarMenorImpar() {
+        CNodo aux1, aux2;
+        aux2 = cabeza;
+        aux1 = cabeza;
+        int nImpar = 0;
+        int nMenor = 10;
+        while (aux1.getSiguiente() != cabeza) {
+            if (aux1.getDato() % 2 != 0) {
+                nImpar = aux1.getDato();
+                break;
+            }
+            while (aux2.getSiguiente() != cabeza) {
+                if (aux2.getDato() < nMenor) {
+                    nMenor = aux2.getDato();
+                }
+                if(aux2.getDato() == nImpar){
+                    aux2.setDato(nMenor);
+                }
+                aux2 = aux2.getSiguiente();
+            }
+            aux1 = aux1.getSiguiente();
+        }
+        System.out.println("El dato impar es: " + nImpar + " y el dato menor es: " + nMenor);
+        System.out.println("Intercambio realizado...");
+    }
+
+}
