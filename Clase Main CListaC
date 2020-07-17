@@ -1,0 +1,143 @@
+package Clases;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Fabrissio
+ */
+public class CListaC {
+
+    static Scanner entrada = new Scanner(System.in);
+    static CListaCircular lista = new CListaCircular();
+    static CNodo nodo;
+
+    public static void main(String[] args) {
+        menu();
+    }
+
+    static void menu() {
+        int opcion;
+        do {
+            System.out.println("\nMenu de Opciones");
+            System.out.println("================");
+            System.out.println("[1] Ingresar Datos al Inicio");
+            System.out.println("[2] Ingresar Datos al Final");
+            System.out.println("[3] Mostrar lista");
+            System.out.println("[4] Mostrar lista Pares");
+            System.out.println("[5] Mostrar lista Impares");
+            System.out.println("[6] Buscar Dato");
+            System.out.println("[7] Modificar Dato");
+            System.out.println("[8] Ordenar Lista");
+            System.out.println("[9] Eliminar Dato Inicial");
+            System.out.println("[10] Eliminar Dato Final");
+            System.out.println("[11] Eliminar Dato Por Posicion");
+            System.out.println("[12] Intercambiar dato mayor con el ultimo");
+            System.out.println("[13] Intercambiar dato menor con el primero");
+            System.out.println("[14] Intercambiar dato menor con el primero dato impar");
+
+            System.out.println("=============");
+            System.out.println("[0] Salir");
+
+            System.out.print("Ingrese una opcion: ");
+            opcion = entrada.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    ingresoInicio();
+                    break;
+
+                case 2:
+                    ingresoFinal();
+                    break;
+
+                case 3:
+                    lista.mostrarDatos();
+                    break;
+
+                case 4:
+                    lista.mostrarPares();
+                    break;
+
+                case 5:
+                    lista.mostrarImpares();
+                    break;
+
+                case 6:
+                    buscarDato();
+                    break;
+
+                case 7:
+                    modificarDato();
+                    break;
+
+                case 8:
+                    lista.ordenarLista();
+                    break;
+
+                case 9:
+                    lista.eliminarInicio();
+                    break;
+
+                case 10:
+                    lista.eliminarFinal();
+                    break;
+
+                case 11:
+                    eliminarPorPosicion();
+                    break;
+
+                case 12:
+                    lista.intercambiarMayorUltimo();
+                    break;
+
+                case 13:
+                    lista.intercambiarMenorPrimero();
+                    break;
+
+                case 14:
+                    lista.intercambiarMenorImpar();
+                    break;
+
+                case 0:
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.print("Ingrese otra opcion...");
+            }
+
+        } while (opcion != 0);
+    }
+
+    static void ingresoInicio() {
+        System.out.print("Ingrese un numero: ");
+        int num = entrada.nextInt();
+        lista.insertarInicio(num);
+    }
+
+    static void ingresoFinal() {
+        System.out.print("Ingrese un numero: ");
+        int num = entrada.nextInt();
+        lista.insertarFinal(num);
+    }
+
+    static void buscarDato() {
+        System.out.print("Ingrese numero a buscar: ");
+        int num = entrada.nextInt();
+        lista.buscarDatos(num);
+    }
+
+    static void modificarDato() {
+        System.out.println("Para modificar un dato primero se debe encontrar en la lista");
+        System.out.print("Ingrese numero a buscar: ");
+        int num = entrada.nextInt();
+        lista.modificarDatos(num);
+    }
+
+    static void eliminarPorPosicion() {
+        System.out.print("Ingrese posicion a eliminar: ");
+        int num = entrada.nextInt();
+        lista.eliminarPosicion(num);
+    }
+}
