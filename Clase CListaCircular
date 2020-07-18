@@ -204,67 +204,79 @@ public class CListaCircular {
 
     public void intercambiarMayorUltimo() {
         CNodo aux1;
-        int nMayor = 10;
-        int vCola = cola.getDato();
+        int nMayor = 0;
         aux1 = cabeza;
         while (aux1.getSiguiente() != cabeza) {
-            if (aux1.getDato() > nMayor) {
+            if (nMayor < aux1.getDato()) {
                 nMayor = aux1.getDato();
             }
-            if (aux1.getDato() == nMayor) {
-                aux1.setDato(vCola);
-            }
-            
             aux1 = aux1.getSiguiente();
         }
-        cola.setDato(nMayor);
+        CNodo aux2 = cabeza;
+        while (aux2.getSiguiente() != cabeza) {
+            if (aux2.getDato() == nMayor) {
+                aux2.setDato(cola.getDato());
+                cola.setDato(nMayor);
+            }
+            aux2 = aux2.getSiguiente();
+        }
         System.out.println("El dato mayor es: " + nMayor);
         System.out.println("Intercambio realizado...");
     }
 
     public void intercambiarMenorPrimero() {
-        CNodo aux1;
-        int nMenor = 30;
-        aux1 = cabeza;
+        CNodo aux1 = cabeza;
+        int nMenor = 1000;
         while (aux1.getSiguiente() != cabeza) {
-            if (aux1.getDato() < nMenor) {
+            if (nMenor > aux1.getDato()) {
                 nMenor = aux1.getDato();
             }
-            if (aux1.getDato() == nMenor) {
-                aux1.setDato(cabeza.getDato());
-            }
-
             aux1 = aux1.getSiguiente();
         }
-        cabeza.setDato(nMenor);
+        CNodo aux2 = cabeza;
+        while (aux2.getSiguiente() != cabeza) {
+            if (aux2.getDato() == nMenor) {
+                aux2.setDato(cabeza.getDato());
+                cabeza.setDato(nMenor);
+            }
+            aux2 = aux2.getSiguiente();
+        }
         System.out.println("El dato menor es: " + nMenor);
         System.out.println("Intercambio realizado...");
     }
 
     public void intercambiarMenorImpar() {
-        CNodo aux1, aux2;
-        aux2 = cabeza;
-        aux1 = cabeza;
-        int nImpar = 0;
-        int nMenor = 10;
+        CNodo aux1 = cabeza;
+        int nMenor = 1000;
         while (aux1.getSiguiente() != cabeza) {
-            if (aux1.getDato() % 2 != 0) {
-                nImpar = aux1.getDato();
-                break;
-            }
-            while (aux2.getSiguiente() != cabeza) {
-                if (aux2.getDato() < nMenor) {
-                    nMenor = aux2.getDato();
-                }
-                if(aux2.getDato() == nImpar){
-                    aux2.setDato(nMenor);
-                }
-                aux2 = aux2.getSiguiente();
+            if (nMenor > aux1.getDato()) {
+                nMenor = aux1.getDato();
             }
             aux1 = aux1.getSiguiente();
         }
-        System.out.println("El dato impar es: " + nImpar + " y el dato menor es: " + nMenor);
+        System.out.println("El dato menor es: " + nMenor);
+        
+        CNodo aux2 = cabeza;
+        int nImpar = 0;
+        while (aux2.getSiguiente() != cabeza) {
+            if (aux2.getDato() % 2 != 0) {
+                nImpar = aux2.getDato();
+                break;
+            }
+            aux2 = aux2.getSiguiente();
+        }
+        System.out.println("El dato impar es " + nImpar);
+        
+        CNodo aux3 = cabeza;
+        while (aux3.getSiguiente() != cabeza) {
+            if (aux3.getDato() == nMenor) {
+                aux3.setDato(nImpar);
+                aux2.setDato(nMenor);
+            }
+            aux3 = aux3.getSiguiente();
+        }
         System.out.println("Intercambio realizado...");
     }
 
 }
+
